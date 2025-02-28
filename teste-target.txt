@@ -1,0 +1,72 @@
+import json
+import xml.etree.ElementTree as ET
+
+def questao1():
+    INDICE = 13
+    SOMA = 0
+    K = 0
+    while K < INDICE:
+        K += 1
+        SOMA += K
+    print(f"Questão 1: O valor final da variável SOMA é {SOMA}")
+
+def is_fibonacci(n):
+    a, b = 0, 1
+    while b < n:
+        a, b = b, a + b
+    return b == n or n == 0
+
+def questao2():
+    num = int(input("Digite um número para verificar se está na sequência de Fibonacci: "))
+    if is_fibonacci(num):
+        print(f"Questão 2: O número {num} pertence à sequência de Fibonacci.")
+    else:
+        print(f"Questão 2: O número {num} não pertence à sequência de Fibonacci.")
+
+def questao3():
+    tree = ET.parse("dados (2).xml")
+    root = tree.getroot()
+    faturamento = []
+    for row in root.findall('row'):
+        valor = float(row.find('valor').text)
+        if valor > 0:
+            faturamento.append(valor)
+    with open("dados.json", "r") as file:
+        data = json.load(file)
+        for entry in data:
+            if entry['valor'] > 0:
+                faturamento.append(entry['valor'])
+    menor = min(faturamento)
+    maior = max(faturamento)
+    media = sum(faturamento) / len(faturamento)
+    dias_acima_media = sum(1 for x in faturamento if x > media)
+    print(f"Questão 3: Menor faturamento: {menor}, Maior faturamento: {maior}, Dias acima da média: {dias_acima_media}")
+
+def questao4():
+    distribuidora = {
+        "SP": 67836.43,
+        "RJ": 36678.66,
+        "MG": 29229.88,
+        "ES": 27165.48,
+        "Outros": 19849.53
+    }
+    total = sum(distribuidora.values())
+    for estado, valor in distribuidora.items():
+        percentual = (valor / total) * 100
+        print(f"Questão 4: {estado}: {percentual:.2f}%")
+
+def questao5():
+    def reverse_string(s):
+        reversed_s = ""
+        for char in s:
+            reversed_s = char + reversed_s
+        return reversed_s
+    texto = input("Digite uma string para inverter: ")
+    print(f"Questão 5: String invertida: {reverse_string(texto)}")
+
+if __name__ == "__main__":
+    questao1()
+    questao2()
+    questao3()
+    questao4()
+    questao5()
